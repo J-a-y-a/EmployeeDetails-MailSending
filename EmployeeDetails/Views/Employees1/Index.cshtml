@@ -1,0 +1,73 @@
+﻿@model IEnumerable<EmployeeDetails.Employee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Place)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Photo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmpName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DOB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Place)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Photo)
+            @{ //Base64 converts binary data,image into readable string
+                var base64 = Convert.ToBase64String(item.Photo);
+                //to display a byte array image from model
+                var imgsrc = string.Format("data:image/png;base64,{0}", base64);
+            }
+            <img src='@imgsrc' style="width:100%" />
+        </td>*@
+        <td>
+            @*  @Html.DisplayFor(modelItem => item.Photo)*@
+            @if (item.Photo != null)
+            {
+                var base64 = Convert.ToBase64String(item.Photo);
+                var imgsrc = string.Format("data:image/png;base64,{0}", base64);
+                <img src='@imgsrc' style="width:100px;height:100px" />
+            }
+
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.EmpID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.EmpID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.EmpID })
+        </td>
+    </tr>
+}
+
+</table>
